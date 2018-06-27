@@ -142,6 +142,7 @@ function updateUser(event){
 		}).done(function(response){
 			if(response.msg === ""){
 				//return;
+				$('#updateUser fieldset input').val('');
 			}
 			else{
 				alert('Error: '+ response.msg);

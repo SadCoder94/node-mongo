@@ -36,6 +36,16 @@ function showUserInfo(event){
 	$('#userInfoAge').text(thisUserObject.age);
 	$('#userInfoGender').text(thisUserObject.gender);
 	$('#userInfoLocation').text(thisUserObject.location);
+	
+	$('#inputUpUserName').val(thisUserObject.username);
+	$('#inputUpUserFullName').val(thisUserObject.fullname);
+	$('#inputUpUserAge').val(thisUserObject.age);
+	$('#inputUpUserGender').val(thisUserObject.gender);
+	$('#inputUpUserLocation').val(thisUserObject.location);
+	$('#inputUpUserGender').val(thisUserObject.gender);
+	$('#inputUpUserLocation').val(thisUserObject.location);
+	$('#inputUpUserEmail').val(thisUserObject.email);
+	$('#inputUpUserId').val(thisUserObject._id);
 };
 
 $('#btnAddUser').on('click',addUser);
@@ -97,6 +107,41 @@ function deleteUser(event){
 		}).done(function(response){
 			if(response === ''){
 				return;
+			}
+			else{
+				alert('Error: '+ response.msg);
+			}
+			console.log(response);
+			populateTable();
+		});
+	}
+	else{
+		return false;
+	}
+};
+
+$('#btnupdateUser').on('click', updateUser);
+
+function updateUser(event){
+	event.preventDefault();
+	var UserInfo = {
+			'username':$('#updateUser fieldset input#inputUpUserName').val(),
+			'email':$('#updateUser fieldset input#inputUpUserEmail').val(),
+			'fullname':$('#updateUser fieldset input#inputUpUserFullName').val(),
+			'age':$('#updateUser fieldset input#inputUpUserAge').val(),
+			'location':$('#updateUser fieldset input#inputUpUserLocation').val(),
+			'gender':$('#updateUser fieldset input#inputUpUserGender').val()
+		};
+	var confirmation = confirm('Are you sure ?');
+	
+	if(confirmation == true){
+		$.ajax({
+			type: 'PUT',
+			url: '/users/updateuser/'+ $('#inputUpUserId').val(),
+			data: UserInfo
+		}).done(function(response){
+			if(response.msg === ""){
+				//return;
 			}
 			else{
 				alert('Error: '+ response.msg);
